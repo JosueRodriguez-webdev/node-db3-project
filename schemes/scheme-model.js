@@ -1,3 +1,5 @@
+const db = require("../data/configDB.js");
+
 module.exports = {
   find,
   findById,
@@ -8,16 +10,38 @@ module.exports = {
   remove
 };
 
-function find() {}
+function find() {
+  return db("schemes").select("*");
+} // Done
 
-function findById() {}
+function findById(id) {
+  return db("schemes").where({ id });
+} // Done
 
-function findSteps() {}
+function findSteps(id) {
+  return db("steps").where({ id });
+} // Done
 
-function add() {}
+function add(body) {
+  return db("schemes").insert(body);
+} // Done
 
-function addStep() {}
+function addStep(body, id) {
+  return db("schemes")
+    .where({ id })
+    .then(() => {
+      return db("steps").insert(body);
+    });
+} // Done
 
-function update() {}
+function update(body, id) {
+  return db("schemes")
+    .where({ id })
+    .update(body);
+} // Done
 
-function remove() {}
+function remove(id) {
+  return db("schemes")
+    .where({ id })
+    .del();
+} // Done
